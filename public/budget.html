@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget Planner | WanderWise</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .budget-layout { display: flex; gap: 30px; margin-top: 30px; }
+    .budget-form { flex: 1; background: var(--bg-card); padding: 30px; border-radius: 20px; border: 1px solid var(--border); }
+    .budget-results { flex: 1; background: var(--bg-card); padding: 30px; border-radius: 20px; border: 1px solid var(--border); display: none; }
+    .expense-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .expense-row:last-child { border-bottom: none; font-weight: bold; font-size: 1.2rem; color: var(--primary); margin-top: 10px; padding-top: 15px; border-top: 2px solid var(--primary); }
+    .progress-bar-container { width: 100%; background: var(--border); height: 10px; border-radius: 5px; margin-top: 5px; overflow: hidden; }
+    .progress-bar { height: 100%; border-radius: 5px; transition: width 0.5s ease; }
+    @media (max-width: 768px) { .budget-layout { flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">Wander<span>Wise</span></a>
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="map.html">India Map</a>
+        <a href="attractions.html">Attractions</a>
+        <a href="restaurants.html">Restaurants</a>
+        <a href="itinerary.html">Itinerary</a>
+        <a href="weather.html">Weather</a>
+        <a href="budget.html">Budget</a>
+        <a href="expenses.html">Expenses</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="about.html">About</a>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <button class="theme-toggle" id="theme-toggle">🌙</button>
+        <button class="menu-btn" id="menu-btn">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 120px; padding-bottom: 60px;">
+    <h2 class="section-title">Smart Travel Budget Planner</h2>
+    <p class="section-subtitle">Estimate your trip expenses accurately.</p>
+
+    <div class="budget-layout">
+      <!-- Form -->
+      <div class="budget-form">
+        <form id="budget-form">
+          <div class="form-group">
+            <label>Starting City</label>
+            <input type="text" id="start-city" class="form-control" value="Hyderabad" required>
+          </div>
+          <div class="form-group">
+            <label>Destination</label>
+            <select id="dest-city" class="form-control" required>
+              <option value="">Loading...</option>
+            </select>
+          </div>
+          <div style="display:flex; gap: 15px;">
+            <div class="form-group" style="flex:1;">
+              <label>Travellers</label>
+              <input type="number" id="travellers" class="form-control" value="2" min="1" max="20" required>
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label>Days</label>
+              <input type="number" id="days" class="form-control" value="3" min="1" max="30" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Travel Category</label>
+            <select id="category" class="form-control">
+              <option value="Budget">Budget (Economy)</option>
+              <option value="Standard" selected>Standard (Comfort)</option>
+              <option value="Premium">Premium (Luxury)</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Calculate Budget</button>
+        </form>
+      </div>
+
+      <!-- Results -->
+      <div class="budget-results" id="budget-results">
+        <h3 style="margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px;">Estimated Breakdown</h3>
+        
+        <div class="expense-row">
+          <span>Transportation</span>
+          <span id="res-transport">₹0</span>
+        </div>
+        <div class="progress-bar-container"><div class="progress-bar" id="bar-transport" style="background:#3b82f6;"></div></div>
+
+        <div class="expense-row">
+          <span>Accommodation</span>
+          <span id="res-hotel">₹0</span>
+        </div>
+        <div class="progress-bar-container"><div class="progress-bar" id="bar-hotel" style="background:#8b5cf6;"></div></div>
+
+        <div class="expense-row">
+          <span>Food & Dining</span>
+          <span id="res-food">₹0</span>
+        </div>
+        <div class="progress-bar-container"><div class="progress-bar" id="bar-food" style="background:#f97316;"></div></div>
+
+        <div class="expense-row">
+          <span>Attractions & Activities</span>
+          <span id="res-attractions">₹0</span>
+        </div>
+        <div class="progress-bar-container"><div class="progress-bar" id="bar-attractions" style="background:#10b981;"></div></div>
+
+        <div class="expense-row">
+          <span>Local Transport & Extra</span>
+          <span id="res-local">₹0</span>
+        </div>
+        <div class="progress-bar-container"><div class="progress-bar" id="bar-local" style="background:#64748b;"></div></div>
+
+        <div class="expense-row">
+          <span>Total Estimated Budget</span>
+          <span id="res-total">₹0</span>
+        </div>
+
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 20px; text-align: center;">
+          * These are sample estimates. Actual prices may vary based on season and availability.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/assistant.js"></script>
+  <script src="js/budget.js"></script>
+</body>
+</html>

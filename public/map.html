@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>India Map Explorer | WanderWise</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .map-container {
+      display: flex;
+      gap: 30px;
+      margin-top: 30px;
+      align-items: flex-start;
+    }
+    .map-states {
+      flex: 1;
+      background: var(--bg-card);
+      padding: 20px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
+    }
+    .state-btn {
+      padding: 15px;
+      text-align: center;
+      background: var(--bg-main);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .state-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .state-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .map-results {
+      flex: 2;
+      background: var(--bg-card);
+      padding: 30px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      min-height: 400px;
+    }
+    .result-card {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .result-card img {
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    @media (max-width: 768px) {
+      .map-container { flex-direction: column; }
+      .map-states { width: 100%; }
+      .map-results { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">Wander<span>Wise</span></a>
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="map.html">India Map</a>
+        <a href="attractions.html">Attractions</a>
+        <a href="restaurants.html">Restaurants</a>
+        <a href="itinerary.html">Itinerary</a>
+        <a href="weather.html">Weather</a>
+        <a href="budget.html">Budget</a>
+        <a href="expenses.html">Expenses</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="about.html">About</a>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <button class="theme-toggle" id="theme-toggle">🌙</button>
+        <button class="menu-btn" id="menu-btn">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 120px; padding-bottom: 60px;">
+    <h2 class="section-title">Interactive India Map</h2>
+    <p class="section-subtitle">Select a state to discover its top tourist destinations.</p>
+
+    <div class="map-container">
+      <!-- Left side: States -->
+      <div class="map-states" id="states-list">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Right side: Results -->
+      <div class="map-results" id="map-results">
+        <h3 style="margin-bottom: 15px; color: var(--text-muted);">Select a state from the left to view destinations.</h3>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/assistant.js"></script>
+  <script src="js/map.js"></script>
+</body>
+</html>

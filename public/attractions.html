@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attractions | WanderWise</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">Wander<span>Wise</span></a>
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="map.html">India Map</a>
+        <a href="attractions.html">Attractions</a>
+        <a href="restaurants.html">Restaurants</a>
+        <a href="itinerary.html">Itinerary</a>
+        <a href="weather.html">Weather</a>
+        <a href="budget.html">Budget</a>
+        <a href="expenses.html">Expenses</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="about.html">About</a>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <button class="theme-toggle" id="theme-toggle">🌙</button>
+        <button class="menu-btn" id="menu-btn">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 120px; padding-bottom: 60px;">
+    <h2 class="section-title">Tourist Attractions</h2>
+    <p class="section-subtitle">Explore iconic landmarks and heritage sites across India.</p>
+
+    <div class="grid-3" id="attractions-grid">
+      <p style="text-align:center; width:100%;">Loading attractions...</p>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/assistant.js"></script>
+  <script src="js/attractions.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "name": "Paradise Biryani",
+    "city": "Hyderabad",
+    "cuisine": "Hyderabadi",
+    "pricePerPerson": 400,
+    "popularDishes": ["Hyderabadi Dum Biryani", "Haleem", "Kebabs"],
+    "rating": 4.5,
+    "location": "MG Road, Secunderabad, Hyderabad",
+    "mapsLink": "https://www.google.com/maps?q=Paradise+Biryani+Hyderabad",
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 2,
+    "name": "Saravana Bhavan",
+    "city": "Chennai",
+    "cuisine": "South Indian",
+    "pricePerPerson": 250,
+    "popularDishes": ["Masala Dosa", "Idli", "Filter Coffee"],
+    "rating": 4.4,
+    "location": "T. Nagar, Chennai",
+    "mapsLink": "https://www.google.com/maps?q=Saravana+Bhavan+Chennai",
+    "image": "https://images.unsplash.com/photo-1630383249896-424e482df921?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 3,
+    "name": "Karim's",
+    "city": "New Delhi",
+    "cuisine": "Mughlai",
+    "pricePerPerson": 500,
+    "popularDishes": ["Mutton Korma", "Seekh Kebab", "Nihari"],
+    "rating": 4.3,
+    "location": "Gali Kababian, Jama Masjid, New Delhi",
+    "mapsLink": "https://www.google.com/maps?q=Karim's+Jama+Masjid+Delhi",
+    "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 4,
+    "name": "Peter Cat",
+    "city": "Kolkata",
+    "cuisine": "Bengali",
+    "pricePerPerson": 700,
+    "popularDishes": ["Chelo Kebab", "Fish Fries", "Bhetki Paturi"],
+    "rating": 4.2,
+    "location": "Park Street, Kolkata",
+    "mapsLink": "https://www.google.com/maps?q=Peter+Cat+Kolkata",
+    "image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 5,
+    "name": "Suvarna Mahal",
+    "city": "Jaipur",
+    "cuisine": "Rajasthani",
+    "pricePerPerson": 1800,
+    "popularDishes": ["Laal Maas", "Dal Baati Churma", "Gatte ki Sabzi"],
+    "rating": 4.6,
+    "location": "Rambagh Palace, Jaipur",
+    "mapsLink": "https://www.google.com/maps?q=Suvarna+Mahal+Jaipur",
+    "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 6,
+    "name": "Gordhan Thal",
+    "city": "Ahmedabad",
+    "cuisine": "Gujarati",
+    "pricePerPerson": 450,
+    "popularDishes": ["Gujarati Thali", "Dhokla", "Undhiyu"],
+    "rating": 4.4,
+    "location": "S.G. Highway, Ahmedabad",
+    "mapsLink": "https://www.google.com/maps?q=Gordhan+Thal+Ahmedabad",
+    "image": "https://images.unsplash.com/photo-1626776876729-bab4369a5a5a?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 7,
+    "name": "Fisherman's Wharf",
+    "city": "Goa",
+    "cuisine": "Goan",
+    "pricePerPerson": 1200,
+    "popularDishes": ["Goan Fish Curry", "Prawn Balchao", "Vindaloo"],
+    "rating": 4.5,
+    "location": "Cavelossim, South Goa",
+    "mapsLink": "https://www.google.com/maps?q=Fisherman's+Wharf+Goa",
+    "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 8,
+    "name": "Bukhara",
+    "city": "New Delhi",
+    "cuisine": "Punjabi",
+    "pricePerPerson": 2500,
+    "popularDishes": ["Dal Bukhara", "Sikandari Raan", "Tandoori Chicken"],
+    "rating": 4.7,
+    "location": "ITC Maurya, Sardar Patel Marg, New Delhi",
+    "mapsLink": "https://www.google.com/maps?q=Bukhara+ITC+Maurya+Delhi",
+    "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 9,
+    "name": "MTR (Mavalli Tiffin Rooms)",
+    "city": "Bengaluru",
+    "cuisine": "South Indian",
+    "pricePerPerson": 300,
+    "popularDishes": ["Rava Idli", "Masala Dosa", "Bisibele Bath"],
+    "rating": 4.4,
+    "location": "Lalbagh Road, Bengaluru",
+    "mapsLink": "https://www.google.com/maps?q=MTR+Bengaluru",
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": 10,
+    "name": "Bade Miyan Kebab",
+    "city": "Mumbai",
+    "cuisine": "Mughlai",
+    "pricePerPerson": 350,
+    "popularDishes": ["Chicken Tikka", "Mutton Seekh", "Bheja Fry"],
+    "rating": 4.2,
+    "location": "Colaba Causeway, Mumbai",
+    "mapsLink": "https://www.google.com/maps?q=Bade+Miyan+Kebab+Mumbai",
+    "image": "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=800&q=80"
+  }
+]

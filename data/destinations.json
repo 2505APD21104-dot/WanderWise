@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "name": "Hyderabad",
+    "state": "Telangana",
+    "category": "Heritage",
+    "description": "The City of Pearls, famous for Charminar, biryani, and its rich Nizami heritage.",
+    "attractions": ["Charminar", "Golconda Fort", "Hussain Sagar"],
+    "image": "https://images.unsplash.com/photo-1572449043416-55f4685c9bb7?auto=format&fit=crop&w=800&q=80",
+    "officialSite": "https://telanganatourism.gov.in"
+  },
+  {
+    "id": 2,
+    "name": "Warangal",
+    "state": "Telangana",
+    "category": "Heritage",
+    "description": "Ancient Kakatiya capital known for its forts and thousand-pillar temples.",
+    "attractions": ["Warangal Fort", "Thousand Pillar Temple", "Ramappa Temple"],
+    "image": "https://images.unsplash.com/photo-1609920658906-8223bd289001?auto=format&fit=crop&w=800&q=80",
+    "officialSite": "https://telanganatourism.gov.in"
+  },
+  {
+    "id": 3,
+    "name": "Jaipur",
+    "state": "Rajasthan",
+    "category": "Heritage",
+    "description": "The Pink City, home to majestic forts, palaces, and vibrant bazaars.",
+    "attractions": ["Hawa Mahal", "Amer Fort", "City Palace"],
+    "image": "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80",
+    "officialSite": "https://www.tourism.rajasthan.gov.in"
+  },
+  {
+    "id": 4,
+    "name": "Agra",
+    "state": "Uttar Pradesh",
+    "category": "Heritage",
+    "description": "Home to the Taj Mahal, one of the Seven Wonders of the World.",
+    "attractions": ["Taj Mahal", "Agra Fort", "Fatehpur Sikri"],
+    "image": "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=800&q=80",
+    "officialSite": "https://uptourism.gov.in"
+  },
+  {
+    "id": 5,
+    "name": "Varanasi",
+    "state": "Uttar Pradesh",
+    "category": "Spiritual",
+    "description": "One of the oldest living cities, sacred ghats on the Ganges.",
+    "attractions": ["Kashi Vishwanath", "Dashashwamedh Ghat", "Sarnath"],
+    "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=800&q=80",
+    "officialSite": "https://uptourism.gov.in"
+  },
+  {
+    "id": 6,
+    "name": "New Delhi",
+    "state": "Delhi",
+    "category": "City",
+    "description": "India's capital, blending Mughal history with modern life.",
+    "attractions": ["India Gate", "Red Fort", "Qutub Minar"],
+    "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80",
+    "officialSite": "https://delhitourism.gov.in"
+  },
+  {
+    "id": 7,
+    "name": "Mumbai",
+    "state": "Maharashtra",
+    "category": "City",
+    "description": "The City of Dreams, India's financial and entertainment capital.",
+    "attractions": ["Gateway of India", "Marine Drive", "Elephanta Caves"],
+    "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=800&q=80",
+    "officialSite": "https://www.maharashtratourism.gov.in"
+  },
+  {
+    "id": 8,
+    "name": "Goa",
+    "state": "Goa",
+    "category": "Beach",
+    "description": "Sun, sand, and Portuguese heritage on India's west coast.",
+    "attractions": ["Baga Beach", "Basilica of Bom Jesus", "Dudhsagar Falls"],
+    "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80",
+    "officialSite": "https://www.goatourism.gov.in"
+  },
+  {
+    "id": 9,
+    "name": "Kerala (Munnar)",
+    "state": "Kerala",
+    "category": "Nature",
+    "description": "God's Own Country – backwaters, tea plantations, and beaches.",
+    "attractions": ["Alleppey Backwaters", "Munnar Tea Gardens", "Kochi Fort"],
+    "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80",
+    "officialSite": "https://www.keralatourism.org"
+  },
+  {
+    "id": 10,
+    "name": "Manali",
+    "state": "Himachal Pradesh",
+    "category": "Mountain",
+    "description": "Himalayan hill station with adventure sports and scenic valleys.",
+    "attractions": ["Solang Valley", "Rohtang Pass", "Hadimba Temple"],
+    "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80",
+    "officialSite": "https://himachaltourism.gov.in"
+  },
+  {
+    "id": 11,
+    "name": "Darjeeling",
+    "state": "West Bengal",
+    "category": "Mountain",
+    "description": "Queen of the Hills – tea gardens and Kanchenjunga views.",
+    "attractions": ["Tiger Hill", "Batasia Loop", "Happy Valley Tea Estate"],
+    "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80",
+    "officialSite": "https://www.wbtourism.gov.in"
+  },
+  {
+    "id": 12,
+    "name": "Mysore",
+    "state": "Karnataka",
+    "category": "Heritage",
+    "description": "Royal city famous for its palace and Dasara festival.",
+    "attractions": ["Mysore Palace", "Chamundi Hills", "Brindavan Gardens"],
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80",
+    "officialSite": "https://karnatakatourism.org"
+  },
+  {
+    "id": 13,
+    "name": "Chennai",
+    "state": "Tamil Nadu",
+    "category": "Beach",
+    "description": "Cultural capital of South India with long beaches and temples.",
+    "attractions": ["Marina Beach", "Kapaleeshwarar Temple", "Fort St. George"],
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80",
+    "officialSite": "https://www.tamilnadutourism.tn.gov.in"
+  },
+  {
+    "id": 14,
+    "name": "Kolkata",
+    "state": "West Bengal",
+    "category": "City",
+    "description": "City of Joy – colonial architecture, art, and street food.",
+    "attractions": ["Victoria Memorial", "Howrah Bridge", "Dakshineswar Temple"],
+    "image": "https://images.unsplash.com/photo-1558431382-27e303142255?auto=format&fit=crop&w=800&q=80",
+    "officialSite": "https://www.wbtourism.gov.in"
+  },
+  {
+    "id": 15,
+    "name": "Udaipur",
+    "state": "Rajasthan",
+    "category": "Heritage",
+    "description": "City of Lakes, known for romantic palaces and sunset views.",
+    "attractions": ["City Palace", "Lake Pichola", "Jag Mandir"],
+    "image": "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?auto=format&fit=crop&w=800&q=80",
+    "officialSite": "https://www.tourism.rajasthan.gov.in"
+  }
+]

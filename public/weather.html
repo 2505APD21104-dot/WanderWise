@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather | WanderWise</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .weather-card {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--gradient);
+      color: white;
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Adds a subtle glassmorphism effect over the gradient */
+    .weather-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      z-index: 0;
+    }
+
+    .weather-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .weather-icon { 
+      font-size: 5rem; 
+      margin-bottom: 10px; 
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+    }
+    
+    .weather-temp { 
+      font-size: 4rem; 
+      font-weight: 800; 
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+    
+    .weather-details { 
+      display: flex; 
+      justify-content: space-around; 
+      margin-top: 30px; 
+      background: rgba(0,0,0,0.2); 
+      padding: 20px; 
+      border-radius: 15px; 
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">Wander<span>Wise</span></a>
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="map.html">India Map</a>
+        <a href="attractions.html">Attractions</a>
+        <a href="restaurants.html">Restaurants</a>
+        <a href="itinerary.html">Itinerary</a>
+        <a href="weather.html">Weather</a>
+        <a href="budget.html">Budget</a>
+        <a href="expenses.html">Expenses</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="about.html">About</a>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <button class="theme-toggle" id="theme-toggle">🌙</button>
+        <button class="menu-btn" id="menu-btn">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 120px; padding-bottom: 60px;">
+    <h2 class="section-title">Destination Weather</h2>
+    <p class="section-subtitle">Check the climate before you pack.</p>
+
+    <!-- City Selector -->
+    <div style="max-width: 400px; margin: 0 auto 30px auto;">
+      <select id="weather-dest" class="form-control" style="text-align: center; font-size: 1.1rem; font-weight: 600;">
+        <option value="Hyderabad">Hyderabad, Telangana</option>
+        <option value="Jaipur">Jaipur, Rajasthan</option>
+        <option value="Goa">Goa</option>
+        <option value="Manali">Manali, Himachal Pradesh</option>
+      </select>
+    </div>
+
+    <!-- Weather Display Card -->
+    <div class="weather-card">
+      <div class="weather-content">
+        <div style="background: rgba(255,255,255,0.2); display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.3);">
+          ⚠️ Demo Weather State (API Not Configured)
+        </div>
+        
+        <div class="weather-icon" id="w-icon">☀️</div>
+        <h3 id="w-city" style="font-size: 1.8rem; margin-bottom: 5px;">Hyderabad</h3>
+        <div class="weather-temp" id="w-temp">32°C</div>
+        <div id="w-cond" style="font-size: 1.2rem; opacity: 0.9;">Sunny</div>
+        
+        <div class="weather-details">
+          <div>
+            <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px;">Humidity</div>
+            <div style="font-weight: bold; font-size: 1.3rem;" id="w-humid">45%</div>
+          </div>
+          <div>
+            <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px;">Wind Speed</div>
+            <div style="font-weight: bold; font-size: 1.3rem;" id="w-wind">12 km/h</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/assistant.js"></script>
+  <script src="js/weather.js"></script>
+</body>
+</html>

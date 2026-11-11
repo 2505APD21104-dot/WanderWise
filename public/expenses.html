@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker | WanderWise</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .tracker-layout { display: flex; gap: 30px; margin-top: 30px; }
+    .tracker-form { flex: 1; background: var(--bg-card); padding: 30px; border-radius: 20px; border: 1px solid var(--border); }
+    .tracker-list { flex: 2; background: var(--bg-card); padding: 30px; border-radius: 20px; border: 1px solid var(--border); }
+    .expense-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid var(--border); }
+    .expense-item:last-child { border-bottom: none; }
+    .delete-btn { background: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+    @media (max-width: 768px) { .tracker-layout { flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">Wander<span>Wise</span></a>
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="map.html">India Map</a>
+        <a href="attractions.html">Attractions</a>
+        <a href="restaurants.html">Restaurants</a>
+        <a href="itinerary.html">Itinerary</a>
+        <a href="weather.html">Weather</a>
+        <a href="budget.html">Budget</a>
+        <a href="expenses.html">Expenses</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="about.html">About</a>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <button class="theme-toggle" id="theme-toggle">🌙</button>
+        <button class="menu-btn" id="menu-btn">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 120px; padding-bottom: 60px;">
+    <h2 class="section-title">Expense Tracker</h2>
+    <p class="section-subtitle">Record your actual travel spending.</p>
+
+    <div class="tracker-layout">
+      <!-- Form -->
+      <div class="tracker-form">
+        <form id="expense-form">
+          <div class="form-group">
+            <label>Expense Name</label>
+            <input type="text" id="exp-name" class="form-control" placeholder="e.g., Train Ticket" required>
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="exp-category" class="form-control">
+              <option value="Transportation">Transportation</option>
+              <option value="Accommodation">Accommodation</option>
+              <option value="Food">Food</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Attractions">Attractions</option>
+              <option value="Local Travel">Local Travel</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Amount (₹)</label>
+            <input type="number" id="exp-amount" class="form-control" required min="1">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Add Expense</button>
+        </form>
+      </div>
+
+      <!-- List -->
+      <div class="tracker-list">
+        <h3 style="margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px;">Your Expenses</h3>
+        <div id="expense-list">
+          <p style="text-align: center; color: var(--text-muted);">No expenses recorded yet.</p>
+        </div>
+        <div style="margin-top: 20px; text-align: right; font-size: 1.2rem; font-weight: bold;">
+          Total Actual: <span id="total-expense" style="color: var(--accent);">₹0</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/assistant.js"></script>
+  <script src="js/expenses.js"></script>
+</body>
+</html>

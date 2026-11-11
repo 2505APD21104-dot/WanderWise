@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurants | WanderWise</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">Wander<span>Wise</span></a>
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="map.html">India Map</a>
+        <a href="attractions.html">Attractions</a>
+        <a href="restaurants.html">Restaurants</a>
+        <a href="itinerary.html">Itinerary</a>
+        <a href="weather.html">Weather</a>
+        <a href="budget.html">Budget</a>
+        <a href="expenses.html">Expenses</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="about.html">About</a>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <button class="theme-toggle" id="theme-toggle">🌙</button>
+        <button class="menu-btn" id="menu-btn">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 120px; padding-bottom: 60px;">
+    <h2 class="section-title">Restaurant Recommendations</h2>
+    <p class="section-subtitle">Taste the best local flavors across India.</p>
+
+    <div class="filters" id="cuisine-filters">
+      <button class="filter-btn active" data-cuisine="All">All</button>
+      <button class="filter-btn" data-cuisine="South Indian">South Indian</button>
+      <button class="filter-btn" data-cuisine="North Indian">North Indian</button>
+      <button class="filter-btn" data-cuisine="Bengali">Bengali</button>
+      <button class="filter-btn" data-cuisine="Mughlai">Mughlai</button>
+      <button class="filter-btn" data-cuisine="Hyderabadi">Hyderabadi</button>
+    </div>
+
+    <div class="grid-3" id="restaurants-grid">
+      <p style="text-align:center; width:100%;">Loading restaurants...</p>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/assistant.js"></script>
+  <script src="js/restaurants.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Itinerary Generator | WanderWise</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .itinerary-layout { display: flex; gap: 30px; margin-top: 30px; }
+    .itinerary-form { flex: 1; background: var(--bg-card); padding: 30px; border-radius: 20px; border: 1px solid var(--border); height: fit-content; }
+    .itinerary-results { flex: 2; }
+    .timeline-card { background: var(--bg-card); border-left: 4px solid var(--accent); padding: 20px; border-radius: 0 15px 15px 0; margin-bottom: 20px; box-shadow: var(--shadow); }
+    .timeline-card h4 { color: var(--primary); margin-bottom: 10px; }
+    .timeline-detail { margin-bottom: 8px; font-size: 0.95rem; }
+    .timeline-detail strong { color: var(--secondary); }
+    .itinerary-cost { background: var(--primary); color: white; padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    @media (max-width: 768px) { .itinerary-layout { flex-direction: column; } }
+    @media print {
+      header, .itinerary-form, .btn-print { display: none !important; }
+      body { background: white; color: black; }
+      .timeline-card { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
+      .itinerary-results { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">Wander<span>Wise</span></a>
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="map.html">India Map</a>
+        <a href="attractions.html">Attractions</a>
+        <a href="restaurants.html">Restaurants</a>
+        <a href="itinerary.html">Itinerary</a>
+        <a href="weather.html">Weather</a>
+        <a href="budget.html">Budget</a>
+        <a href="expenses.html">Expenses</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="about.html">About</a>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <button class="theme-toggle" id="theme-toggle">🌙</button>
+        <button class="menu-btn" id="menu-btn">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 120px; padding-bottom: 60px;">
+    <h2 class="section-title">Smart Itinerary Generator</h2>
+    <p class="section-subtitle">Plan your perfect trip in seconds.</p>
+
+    <div class="itinerary-layout">
+      <div class="itinerary-form">
+        <form id="itin-form">
+          <div class="form-group">
+            <label>Destination</label>
+            <select id="itin-dest" class="form-control" required>
+              <option value="">Loading...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Duration (Days)</label>
+            <select id="itin-days" class="form-control">
+              <option value="2">2 Days</option>
+              <option value="3" selected>3 Days</option>
+              <option value="5">5 Days</option>
+              <option value="7">7 Days</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Budget Category</label>
+            <select id="itin-category" class="form-control">
+              <option value="Budget">Budget</option>
+              <option value="Standard" selected>Standard</option>
+              <option value="Premium">Premium</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Generate Itinerary</button>
+        </form>
+      </div>
+
+      <div class="itinerary-results" id="itin-results">
+        <div style="text-align: center; color: var(--text-muted); padding: 50px;">
+          Fill the form and click generate to see your itinerary.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/assistant.js"></script>
+  <script src="js/itinerary.js"></script>
+</body>
+</html>

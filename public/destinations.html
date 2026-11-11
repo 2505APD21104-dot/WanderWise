@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destinations | WanderWise</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">Wander<span>Wise</span></a>
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="map.html">India Map</a>
+        <a href="attractions.html">Attractions</a>
+        <a href="restaurants.html">Restaurants</a>
+        <a href="itinerary.html">Itinerary</a>
+        <a href="weather.html">Weather</a>
+        <a href="budget.html">Budget</a>
+        <a href="expenses.html">Expenses</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="about.html">About</a>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <button class="theme-toggle" id="theme-toggle">🌙</button>
+        <button class="menu-btn" id="menu-btn">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 120px; padding-bottom: 60px;">
+    <h2 class="section-title">Explore Destinations</h2>
+    <p class="section-subtitle">Find your next favorite spot in India.</p>
+
+    <!-- Search and Filters -->
+    <div style="max-width: 600px; margin: 0 auto 30px auto;">
+      <input type="text" id="search-dest" class="form-control" placeholder="Search by city, state, or keyword...">
+    </div>
+
+    <div class="filters" id="dest-filters">
+      <button class="filter-btn active" data-category="All">All</button>
+      <button class="filter-btn" data-category="Heritage">Heritage</button>
+      <button class="filter-btn" data-category="Nature">Nature</button>
+      <button class="filter-btn" data-category="Beach">Beach</button>
+      <button class="filter-btn" data-category="Mountain">Mountain</button>
+      <button class="filter-btn" data-category="City">City</button>
+      <button class="filter-btn" data-category="Spiritual">Spiritual</button>
+    </div>
+
+    <!-- Destinations Grid -->
+    <div class="grid-3" id="destinations-grid">
+      <!-- Cards injected via JS -->
+      <p style="text-align:center; width:100%;">Loading destinations...</p>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/assistant.js"></script>
+  <script src="js/destinations.js"></script>
+</body>
+</html>

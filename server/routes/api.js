@@ -1,319 +1,178 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto'); 
+const mongoose = require('mongoose');
+const crypto = require('crypto');
 const router = express.Router();
 
-const DATA_DIR = path.join(__dirname, '..', '..', 'data');
+// --- MongoDB Connection ---
+// I have already put your connection string here for you!
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://2505a21104_db_user:KpiyuVE9yHprFoCN@cluster0.gfzsgos.mongodb.net/wanderwise?retryWrites=true&w=majority';
 
-// Helper to load JSON safely
-function loadJSON(file) {
-  try {
-    const raw = fs.readFileSync(path.join(DATA_DIR, file), 'utf-8');
-    return JSON.parse(raw);
-  } catch (err) {
-    console.error(`Error loading ${file}:`, err.message);
-    return [];
-  }
-}
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log('✅ Connected to MongoDB Atlas'))
+  .catch(err => console.error('❌ MongoDB connection error:', err));
 
-// Helper to hash password
+// --- Database Models ---
+const User = mongoose.model('User', new mongoose.Schema({ 
+  name: String, email: String, password: String 
+}));
+
+const Review = mongoose.model('Review', new mongoose.Schema({ 
+  attractionId: String, name: String, rating: Number, comment: String, date: String 
+}));
+
+// Helper for passwords
 const hashPassword = (password) => {
   return crypto.createHash('sha256').update(password).digest('hex');
 };
 
-// ==========================================
-// GET ROUTES
-// ==========================================
+// --- STATIC DATA (Destinations, Attractions, Restaurants) ---
+const destinations = require('../../data/destinations.json');
+const attractions = require('../../data/attractions.json');
+const restaurants = require('../../data/restaurants.json');
 
-// GET /api/destinations
+// ==========================================
+// GET ROUTES (Static Data)
+// ==========================================
 router.get('/destinations', (req, res) => {
-  try {
-    let destinations = loadJSON('destinations.json');
-    const { search, category } = req.query;
-
-    if (search) {
-      const q = search.toLowerCase();
-      destinations = destinations.filter(d =>
-        d.name.toLowerCase().includes(q) ||
-        d.state.toLowerCase().includes(q) ||
-        d.description.toLowerCase().includes(q)
-      );
-    }
-    if (category && category !== 'All') {
-      destinations = destinations.filter(d =>
-        d.category.toLowerCase() === category.toLowerCase()
-      );
-    }
-    res.json({ success: true, count: destinations.length, data: destinations });
-  } catch (err) {
-    res.status(500).json({ success: false, error: 'Failed to load destinations' });
+  let filtered = destinations;
+  const { search, category } = req.query;
+  if (search) {
+    const q = search.toLowerCase();
+    filtered = filtered.filter(d => d.name.toLowerCase().includes(q) || d.state.toLowerCase().includes(q) || d.description.toLowerCase().includes(q));
   }
+  if (category && category !== 'All') {
+    filtered = filtered.filter(d => d.category.toLowerCase() === category.toLowerCase());
+  }
+  res.json({ success: true, count: filtered.length, data: filtered });
 });
 
-// GET /api/attractions
 router.get('/attractions', (req, res) => {
-  try {
-    let attractions = loadJSON('attractions.json');
-    const { city, state } = req.query;
-    if (city) {
-      attractions = attractions.filter(a => a.city.toLowerCase() === city.toLowerCase());
-    }
-    if (state) {
-      attractions = attractions.filter(a => a.state.toLowerCase() === state.toLowerCase());
-    }
-    res.json({ success: true, count: attractions.length, data: attractions });
-  } catch (err) {
-    res.status(500).json({ success: false, error: 'Failed to load attractions' });
-  }
+  res.json({ success: true, count: attractions.length, data: attractions });
 });
 
-// GET /api/restaurants
 router.get('/restaurants', (req, res) => {
-  try {
-    let restaurants = loadJSON('restaurants.json');
-    const { cuisine, city } = req.query;
-    if (cuisine && cuisine !== 'All') {
-      restaurants = restaurants.filter(r => r.cuisine.toLowerCase() === cuisine.toLowerCase());
-    }
-    if (city) {
-      restaurants = restaurants.filter(r => r.city.toLowerCase() === city.toLowerCase());
-    }
-    res.json({ success: true, count: restaurants.length, data: restaurants });
-  } catch (err) {
-    res.status(500).json({ success: false, error: 'Failed to load restaurants' });
-  }
+  res.json({ success: true, count: restaurants.length, data: restaurants });
 });
 
-// GET /api/recommendations (Rule-based AI Assistant)
 router.get('/recommendations', (req, res) => {
   const { query } = req.query;
-  let reply = "I'm your WanderWise Travel Assistant! I can help you with destinations, attractions, and budgets.";
-  
+  let reply = "I'm your WanderWise Travel Assistant! Ask me about beaches, mountains, history, or budget tips.";
   if (query) {
     const q = query.toLowerCase();
     if (q.includes('beach')) reply = "I recommend Goa for beaches, and Chennai for Marina Beach.";
-    else if (q.includes('mountain') || q.includes('hill')) reply = "You should visit Manali or Darjeeling for great mountain views.";
-    else if (q.includes('history') || q.includes('heritage')) reply = "Jaipur, Agra, and Hyderabad are perfect for history lovers.";
-    else if (q.includes('food')) reply = "Try Paradise Biryani in Hyderabad or Karim's in Delhi!";
-    else if (q.includes('budget') || q.includes('cheap')) reply = "Use our Budget Planner! Choose 'Budget' category and travel in groups to save.";
+    else if (q.includes('mountain')) reply = "You should visit Manali or Darjeeling for great mountain views.";
+    else if (q.includes('history')) reply = "Jaipur, Agra, and Hyderabad are perfect for history lovers.";
   }
-
   res.json({ success: true, reply });
 });
 
 // ==========================================
-// POST ROUTES (Data Processing & Auth)
+// POST ROUTES (Budget & Itinerary)
 // ==========================================
-
-// POST /api/budget
 router.post('/budget', (req, res) => {
-  try {
-    const { startingCity, destination, travellers = 1, days = 1, category = 'Standard' } = req.body;
+  const { startingCity, destination, travellers = 1, days = 1, category = 'Standard' } = req.body;
+  if (!destination || !startingCity) return res.status(400).json({ success: false, error: 'Starting city and destination are required' });
+  
+  const multipliers = {
+    Budget: { transport: 2000, hotel: 800, food: 500, extra: 400 },
+    Standard: { transport: 5000, hotel: 2500, food: 1000, extra: 800 },
+    Premium: { transport: 12000, hotel: 7000, food: 2500, extra: 2000 }
+  };
+  const m = multipliers[category] || multipliers.Standard;
+  const numT = parseInt(travellers);
+  const numD = parseInt(days);
 
-    if (!destination || !startingCity) {
-      return res.status(400).json({ success: false, error: 'Starting city and destination are required' });
-    }
-    
-    const numTravellers = parseInt(travellers);
-    const numDays = parseInt(days);
-    
-    if (isNaN(numTravellers) || numTravellers < 1 || numTravellers > 20) {
-      return res.status(400).json({ success: false, error: 'Travellers must be between 1 and 20' });
-    }
-    if (isNaN(numDays) || numDays < 1 || numDays > 60) {
-      return res.status(400).json({ success: false, error: 'Days must be between 1 and 60' });
-    }
-
-    const multipliers = {
-      Budget: { transport: 2000, hotel: 800, food: 500, extra: 400 },
-      Standard: { transport: 5000, hotel: 2500, food: 1000, extra: 800 },
-      Premium: { transport: 12000, hotel: 7000, food: 2500, extra: 2000 }
-    };
-    
-    const m = multipliers[category] || multipliers.Standard;
-
-    const transportCost = m.transport * numTravellers;
-    const hotelCost = m.hotel * numDays * Math.ceil(numTravellers / 2);
-    const foodCost = m.food * numDays * numTravellers;
-    const attractionFees = 500 * numDays * numTravellers;
-    const localTransport = 400 * numDays;
-    const additional = m.extra * numDays;
-    const total = transportCost + hotelCost + foodCost + attractionFees + localTransport + additional;
-
-    res.json({
-      success: true,
-      disclaimer: 'Sample estimate only. Actual costs may vary.',
-      breakdown: {
-        transportation: transportCost,
-        hotel: hotelCost,
-        food: foodCost,
-        attractionFees,
-        localTransport,
-        additional,
-        total
-      }
-    });
-  } catch (err) {
-    res.status(500).json({ success: false, error: 'Budget calculation failed' });
-  }
+  const breakdown = {
+    transportation: m.transport * numT,
+    hotel: m.hotel * numD * Math.ceil(numT / 2),
+    food: m.food * numD * numT,
+    attractionFees: 500 * numD * numT,
+    localTransport: 400 * numD,
+    additional: m.extra * numD
+  };
+  breakdown.total = Object.values(breakdown).reduce((a, b) => a + b, 0);
+  
+  res.json({ success: true, breakdown });
 });
 
-// POST /api/itinerary
 router.post('/itinerary', (req, res) => {
-  try {
-    const { destination, days = 3, travellers = 2, category = 'Standard', interests = [] } = req.body;
-
-    if (!destination) {
-      return res.status(400).json({ success: false, error: 'Destination is required' });
-    }
-
-    const numDays = parseInt(days);
-    if (![2, 3, 5, 7].includes(numDays)) {
-      return res.status(400).json({ success: false, error: 'Days must be 2, 3, 5, or 7' });
-    }
-
-    const attractions = loadJSON('attractions.json').filter(a => a.city.toLowerCase() === destination.toLowerCase());
-    const restaurants = loadJSON('restaurants.json').filter(r => r.city.toLowerCase() === destination.toLowerCase());
-
-    const itinerary = [];
-    const dailyActivities = [
-      { morning: 'Visit main attractions', afternoon: 'Local sightseeing', evening: 'Try local cuisine' },
-      { morning: 'Explore heritage sites', afternoon: 'Shopping at local markets', evening: 'Cultural show' },
-      { morning: 'Nature walk', afternoon: 'Museum visit', evening: 'Relax at hotel' },
-      { morning: 'Adventure activity', afternoon: 'Photography tour', evening: 'Sunset point' },
-      { morning: 'Temple visit', afternoon: 'Local craft exploration', evening: 'Street food tour' },
-      { morning: 'Day trip nearby', afternoon: 'Return and rest', evening: 'Fine dining' },
-      { morning: 'Leisure morning', afternoon: 'Last-minute shopping', evening: 'Departure prep' }
-    ];
-
-    for (let i = 0; i < numDays; i++) {
-      const act = dailyActivities[i % dailyActivities.length];
-      itinerary.push({
-        day: i + 1,
-        morning: act.morning,
-        afternoon: act.afternoon,
-        evening: act.evening,
-        attractions: attractions.length > 0 ? [attractions[i % attractions.length].name] : ['Local Sightseeing'],
-        restaurants: restaurants.length > 0 ? [restaurants[i % restaurants.length].name] : ['Local Food Joint'],
-        estimatedCost: category === 'Premium' ? 5000 : (category === 'Standard' ? 2500 : 1200),
-        tips: 'Stay hydrated and carry local maps.'
-      });
-    }
-
-    res.json({ success: true, destination, days: numDays, itinerary });
-  } catch (err) {
-    res.status(500).json({ success: false, error: 'Itinerary generation failed' });
+  const { destination, days = 3, category = 'Standard' } = req.body;
+  const numDays = parseInt(days);
+  const dailyActivities = [
+    { morning: 'Visit main attractions', afternoon: 'Local sightseeing', evening: 'Try local cuisine' },
+    { morning: 'Explore heritage sites', afternoon: 'Shopping at local markets', evening: 'Cultural show' },
+    { morning: 'Nature walk', afternoon: 'Museum visit', evening: 'Relax at hotel' },
+    { morning: 'Adventure activity', afternoon: 'Photography tour', evening: 'Sunset point' }
+  ];
+  const itinerary = [];
+  for (let i = 0; i < numDays; i++) {
+    const act = dailyActivities[i % dailyActivities.length];
+    itinerary.push({
+      day: i + 1, ...act,
+      estimatedCost: category === 'Premium' ? 5000 : (category === 'Standard' ? 2500 : 1200)
+    });
   }
+  res.json({ success: true, destination, days: numDays, itinerary });
 });
 
 // ==========================================
-// AUTHENTICATION ROUTES
+// AUTHENTICATION (MongoDB)
 // ==========================================
-
-// POST /api/register
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    
-    if (!name || !email || !password) {
-      return res.status(400).json({ success: false, error: 'All fields are required' });
-    }
+    if (!name || !email || !password) return res.status(400).json({ success: false, error: 'All fields are required' });
 
-    const users = loadJSON('users.json');
-    
-    if (users.find(u => u.email === email)) {
-      return res.status(400).json({ success: false, error: 'Email already exists' });
-    }
+    const existingUser = await User.findOne({ email });
+    if (existingUser) return res.status(400).json({ success: false, error: 'Email already exists' });
 
-    const newUser = {
-      id: Date.now().toString(),
-      name,
-      email,
-      password: hashPassword(password)
-    };
+    const newUser = new User({ name, email, password: hashPassword(password) });
+    await newUser.save();
 
-    users.push(newUser);
-    fs.writeFileSync(path.join(DATA_DIR, 'users.json'), JSON.stringify(users, null, 2));
-    
-    const token = newUser.id;
-    res.json({ success: true, token, user: { name: newUser.name, email: newUser.email } });
+    res.json({ success: true, token: newUser._id, user: { name: newUser.name, email: newUser.email } });
   } catch (err) {
     res.status(500).json({ success: false, error: 'Registration failed' });
   }
 });
 
-// POST /api/login
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-    
-    if (!email || !password) {
-      return res.status(400).json({ success: false, error: 'Email and password are required' });
-    }
+    const user = await User.findOne({ email, password: hashPassword(password) });
+    if (!user) return res.status(401).json({ success: false, error: 'Invalid email or password' });
 
-    const users = loadJSON('users.json');
-    const user = users.find(u => u.email === email && u.password === hashPassword(password));
-
-    if (!user) {
-      return res.status(401).json({ success: false, error: 'Invalid email or password' });
-    }
-
-    const token = user.id;
-    res.json({ success: true, token, user: { name: user.name, email: user.email } });
+    res.json({ success: true, token: user._id, user: { name: user.name, email: user.email } });
   } catch (err) {
     res.status(500).json({ success: false, error: 'Login failed' });
   }
 });
 
 // ==========================================
-// RATINGS & COMMENTS ROUTES
+// RATINGS & REVIEWS (MongoDB)
 // ==========================================
-
-// GET /api/reviews/:attractionId
-router.get('/reviews/:attractionId', (req, res) => {
+router.get('/reviews/:attractionId', async (req, res) => {
   try {
-    const { attractionId } = req.params;
-    const reviews = loadJSON('reviews.json');
-    
-    // Filter reviews for this specific attraction
-    const attractionReviews = reviews.filter(r => r.attractionId === attractionId);
-    
-    // Calculate average rating
+    const reviews = await Review.find({ attractionId: req.params.attractionId });
     let avgRating = 0;
-    if (attractionReviews.length > 0) {
-      const total = attractionReviews.reduce((sum, r) => sum + r.rating, 0);
-      avgRating = (total / attractionReviews.length).toFixed(1);
+    if (reviews.length > 0) {
+      const total = reviews.reduce((sum, r) => sum + r.rating, 0);
+      avgRating = (total / reviews.length).toFixed(1);
     }
-
-    res.json({ success: true, average: avgRating, count: attractionReviews.length, data: attractionReviews });
+    res.json({ success: true, average: avgRating, count: reviews.length, data: reviews });
   } catch (err) {
     res.status(500).json({ success: false, error: 'Failed to load reviews' });
   }
 });
 
-// POST /api/reviews
-router.post('/reviews', (req, res) => {
+router.post('/reviews', async (req, res) => {
   try {
     const { attractionId, name, rating, comment } = req.body;
-    
-    if (!attractionId || !name || !rating || !comment) {
-      return res.status(400).json({ success: false, error: 'All fields are required' });
-    }
+    if (!attractionId || !name || !rating || !comment) return res.status(400).json({ success: false, error: 'All fields are required' });
 
-    const reviews = loadJSON('reviews.json');
-    
-    const newReview = {
-      id: Date.now().toString(),
-      attractionId,
-      name,
-      rating: parseInt(rating),
-      comment,
-      date: new Date().toLocaleDateString()
-    };
-
-    reviews.push(newReview);
-    fs.writeFileSync(path.join(DATA_DIR, 'reviews.json'), JSON.stringify(reviews, null, 2));
+    const newReview = new Review({
+      attractionId, name, rating: parseInt(rating), comment, date: new Date().toLocaleDateString()
+    });
+    await newReview.save();
     
     res.json({ success: true, review: newReview });
   } catch (err) {

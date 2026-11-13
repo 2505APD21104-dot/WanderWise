@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1718000000001",
+    "attractionId": "1",
+    "name": "Rahul Sharma",
+    "rating": 5,
+    "comment": "Absolutely breathtaking! Seeing the Taj Mahal at sunrise is a memory I will never forget. A must-visit.",
+    "date": "10/11/2026"
+  },
+  {
+    "id": "1718000000002",
+    "attractionId": "1",
+    "name": "Priya Patel",
+    "rating": 4,
+    "comment": "Beautiful architecture, but it gets very crowded in the afternoon. Try to go early morning for the best photos.",
+    "date": "11/12/2026"
+  },
+  {
+    "id": "1718000000003",
+    "attractionId": "2",
+    "name": "Amit Kumar",
+    "rating": 5,
+    "comment": "The heart of Hyderabad! The street food around Charminar is amazing. Don't forget to try the Irani Chai.",
+    "date": "12/11/2026"
+  }
+]

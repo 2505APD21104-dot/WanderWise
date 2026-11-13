@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto'); // Added for password hashing
+const crypto = require('crypto'); 
 const router = express.Router();
 
 const DATA_DIR = path.join(__dirname, '..', '..', 'data');
@@ -208,7 +208,7 @@ router.post('/itinerary', (req, res) => {
 });
 
 // ==========================================
-// AUTHENTICATION ROUTES (Login/Register)
+// AUTHENTICATION ROUTES
 // ==========================================
 
 // POST /api/register
@@ -263,6 +263,61 @@ router.post('/login', (req, res) => {
     res.json({ success: true, token, user: { name: user.name, email: user.email } });
   } catch (err) {
     res.status(500).json({ success: false, error: 'Login failed' });
+  }
+});
+
+// ==========================================
+// RATINGS & COMMENTS ROUTES
+// ==========================================
+
+// GET /api/reviews/:attractionId
+router.get('/reviews/:attractionId', (req, res) => {
+  try {
+    const { attractionId } = req.params;
+    const reviews = loadJSON('reviews.json');
+    
+    // Filter reviews for this specific attraction
+    const attractionReviews = reviews.filter(r => r.attractionId === attractionId);
+    
+    // Calculate average rating
+    let avgRating = 0;
+    if (attractionReviews.length > 0) {
+      const total = attractionReviews.reduce((sum, r) => sum + r.rating, 0);
+      avgRating = (total / attractionReviews.length).toFixed(1);
+    }
+
+    res.json({ success: true, average: avgRating, count: attractionReviews.length, data: attractionReviews });
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'Failed to load reviews' });
+  }
+});
+
+// POST /api/reviews
+router.post('/reviews', (req, res) => {
+  try {
+    const { attractionId, name, rating, comment } = req.body;
+    
+    if (!attractionId || !name || !rating || !comment) {
+      return res.status(400).json({ success: false, error: 'All fields are required' });
+    }
+
+    const reviews = loadJSON('reviews.json');
+    
+    const newReview = {
+      id: Date.now().toString(),
+      attractionId,
+      name,
+      rating: parseInt(rating),
+      comment,
+      date: new Date().toLocaleDateString()
+    };
+
+    reviews.push(newReview);
+    fs.writeFileSync(path.join(DATA_DIR, 'reviews.json'), JSON.stringify(reviews, null, 2));
+    
+    res.json({ success: true, review: newReview });
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'Failed to save review' });
   }
 });
 

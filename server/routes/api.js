@@ -5,7 +5,7 @@ const router = express.Router();
 
 // --- MongoDB Connection ---
 // I have already put your connection string here for you!
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://2505a21104_db_user:KpiyuVE9yHprFoCN@cluster0.gfzsgos.mongodb.net/wanderwise?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI ;
 
 mongoose.connect(MONGODB_URI)
   .then(() => console.log('✅ Connected to MongoDB Atlas'))

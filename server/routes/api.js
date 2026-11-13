@@ -4,8 +4,7 @@ const crypto = require('crypto');
 const router = express.Router();
 
 // --- MongoDB Connection ---
-// I have already put your connection string here for you!
-const MONGODB_URI = process.env.MONGODB_URI ;
+const MONGODB_URI = process.env.MONGODB_URI;
 
 mongoose.connect(MONGODB_URI)
   .then(() => console.log('✅ Connected to MongoDB Atlas'))
@@ -95,24 +94,44 @@ router.post('/budget', (req, res) => {
   res.json({ success: true, breakdown });
 });
 
+// --- FIXED ITINERARY ROUTE ---
 router.post('/itinerary', (req, res) => {
-  const { destination, days = 3, category = 'Standard' } = req.body;
-  const numDays = parseInt(days);
-  const dailyActivities = [
-    { morning: 'Visit main attractions', afternoon: 'Local sightseeing', evening: 'Try local cuisine' },
-    { morning: 'Explore heritage sites', afternoon: 'Shopping at local markets', evening: 'Cultural show' },
-    { morning: 'Nature walk', afternoon: 'Museum visit', evening: 'Relax at hotel' },
-    { morning: 'Adventure activity', afternoon: 'Photography tour', evening: 'Sunset point' }
-  ];
-  const itinerary = [];
-  for (let i = 0; i < numDays; i++) {
-    const act = dailyActivities[i % dailyActivities.length];
-    itinerary.push({
-      day: i + 1, ...act,
-      estimatedCost: category === 'Premium' ? 5000 : (category === 'Standard' ? 2500 : 1200)
-    });
+  try {
+    const { destination, days = 3, category = 'Standard' } = req.body;
+    const numDays = parseInt(days);
+
+    if (!destination) {
+      return res.status(400).json({ success: false, error: 'Destination is required' });
+    }
+
+    // Find matching attractions and restaurants from the JSON arrays
+    const matchingAttractions = attractions.filter(a => a.city.toLowerCase() === destination.toLowerCase());
+    const matchingRestaurants = restaurants.filter(r => r.city.toLowerCase() === destination.toLowerCase());
+
+    const dailyActivities = [
+      { morning: 'Visit main attractions', afternoon: 'Local sightseeing', evening: 'Try local cuisine' },
+      { morning: 'Explore heritage sites', afternoon: 'Shopping at local markets', evening: 'Cultural show' },
+      { morning: 'Nature walk', afternoon: 'Museum visit', evening: 'Relax at hotel' },
+      { morning: 'Adventure activity', afternoon: 'Photography tour', evening: 'Sunset point' }
+    ];
+
+    const itinerary = [];
+    for (let i = 0; i < numDays; i++) {
+      const act = dailyActivities[i % dailyActivities.length];
+      itinerary.push({
+        day: i + 1, 
+        morning: act.morning,
+        afternoon: act.afternoon,
+        evening: act.evening,
+        attractions: matchingAttractions.length > 0 ? [matchingAttractions[i % matchingAttractions.length].name] : ['Local Sightseeing'],
+        restaurants: matchingRestaurants.length > 0 ? [matchingRestaurants[i % matchingRestaurants.length].name] : ['Local Food Joint'],
+        estimatedCost: category === 'Premium' ? 5000 : (category === 'Standard' ? 2500 : 1200)
+      });
+    }
+    res.json({ success: true, destination, days: numDays, itinerary });
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'Itinerary generation failed' });
   }
-  res.json({ success: true, destination, days: numDays, itinerary });
 });
 
 // ==========================================
